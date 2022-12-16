@@ -626,6 +626,10 @@ public class OSMReader {
         osmWayIdToRelationFlagsMap.put(osmId, relFlagsAsLong);
     }
 
+    public ElevationProvider getElevationProvider() {
+        return eleProvider;
+    }
+
     @Override
     public String toString() {
         return getClass().getSimpleName();

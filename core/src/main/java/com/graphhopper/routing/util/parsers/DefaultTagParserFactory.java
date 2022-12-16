@@ -81,6 +81,23 @@ public class DefaultTagParserFactory implements TagParserFactory {
             return new OSMFootwayParser(lookup.getEnumEncodedValue(Footway.KEY, Footway.class));
         else if (name.equals(Country.KEY))
             return new CountryParser(lookup.getEnumEncodedValue(Country.KEY, Country.class));
+        /**
+         * ADD custom Parses
+         * **/
+        else if (name.equals(CCommune.KEY))
+            return new CCommuneParser(lookup.getIntEncodedValue(CCommune.KEY));
+        else if (name.equals(CDbName.KEY))
+            return new CDbNameParser(lookup.getIntEncodedValue(CDbName.KEY));
+        else if (name.equals(CDistrict.KEY))
+            return new CDistrictParser(lookup.getIntEncodedValue(CDistrict.KEY));
+        else if (name.equals(CMilitary.KEY))
+            return new CMilitaryParser(lookup.getIntEncodedValue(CMilitary.KEY));
+        else if (name.equals(COsmId.KEY))
+            return new COsmIdParser(lookup.getIntEncodedValue(COsmId.KEY));
+        else if (name.equals(CProvince.KEY))
+            return new CProvinceParser(lookup.getIntEncodedValue(CProvince.KEY));
+        else if (name.equals(CStreetType.KEY))
+            return new CStreetTypeParser(lookup.getIntEncodedValue(CStreetType.KEY));
         return null;
     }
 }

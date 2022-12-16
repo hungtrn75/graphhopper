@@ -96,6 +96,16 @@
             <artifactId>logback-classic</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>mil.nga</groupId>
+            <artifactId>tiff</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.filosganga</groupId>
+            <artifactId>geogson-core</artifactId>
+            <version>1.4.31</version>
+        </dependency>
     </dependencies>
 
     <build>

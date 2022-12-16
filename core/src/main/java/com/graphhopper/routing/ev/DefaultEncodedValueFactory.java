@@ -94,6 +94,20 @@ public class DefaultEncodedValueFactory implements EncodedValueFactory {
             enc = AverageSlope.create();
         } else if (Curvature.KEY.equals(name)) {
             enc = Curvature.create();
+        } else if (name.equals(CMilitary.KEY)) {
+            enc = CMilitary.create();
+        } else if (name.equals(CProvince.KEY)) {
+            enc = CProvince.create();
+        } else if (name.equals(CDistrict.KEY)) {
+            enc = CDistrict.create();
+        } else if (name.equals(CCommune.KEY)) {
+            enc = CCommune.create();
+        } else if (name.equals(COsmId.KEY)) {
+            enc = COsmId.create();
+        } else if (name.equals(CDbName.KEY)) {
+            enc = CDbName.create();
+        } else if (name.equals(CStreetType.KEY)) {
+            enc = CStreetType.create();
         } else {
             throw new IllegalArgumentException("DefaultEncodedValueFactory cannot find EncodedValue " + name);
         }

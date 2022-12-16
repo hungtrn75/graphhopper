@@ -31,6 +31,7 @@ import com.graphhopper.util.Helper;
 import io.dropwizard.lifecycle.Managed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import postgis.GraphHopperPostgis;
 
 import java.io.File;
 import java.nio.file.Paths;
@@ -45,6 +46,8 @@ public class GraphHopperManaged implements Managed {
     public GraphHopperManaged(GraphHopperConfig configuration) {
         if (configuration.has("gtfs.file")) {
             graphHopper = new GraphHopperGtfs(configuration);
+        } else if (configuration.has("db.host")) {
+            graphHopper = new GraphHopperPostgis(configuration);
         } else {
             graphHopper = new GraphHopper();
         }
