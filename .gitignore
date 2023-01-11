@@ -42,5 +42,5 @@ local.properties
 **/node_modules
 .DS_Store
 /graph-cache
-/vn30dem
+*/vn30dem
 package-lock.json
