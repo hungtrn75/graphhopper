@@ -35,7 +35,7 @@ public class OSMMaxWidthParser implements TagParser {
 
     @Override
     public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay way, IntsRef relationFlags) {
-        List<String> widthTags = Arrays.asList("maxwidth", "maxwidth:physical", "width");
+        List<String> widthTags = Arrays.asList("maxwidth", "maxwidth:physical", "width", "max_width");
         OSMValueExtractor.extractMeter(edgeFlags, way, widthEncoder, widthTags);
         return edgeFlags;
     }

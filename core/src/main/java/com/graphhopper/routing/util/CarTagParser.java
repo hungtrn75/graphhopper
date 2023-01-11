@@ -174,7 +174,7 @@ public class CarTagParser extends VehicleTagParser {
             }
             return WayAccess.CAN_SKIP;
         }
-        
+
         if ("service".equals(highwayValue) && "emergency_access".equals(way.getTag("service"))) {
             return WayAccess.CAN_SKIP;
         }
@@ -192,7 +192,7 @@ public class CarTagParser extends VehicleTagParser {
         if (!firstValue.isEmpty()) {
             String[] restrict = firstValue.split(";");
             boolean notConditionalyPermitted = !getConditionalTagInspector().isRestrictedWayConditionallyPermitted(way);
-            for (String value: restrict) {
+            for (String value : restrict) {
                 if (restrictedValues.contains(value) && notConditionalyPermitted)
                     return WayAccess.CAN_SKIP;
                 if (intendedValues.contains(value))
@@ -206,8 +206,20 @@ public class CarTagParser extends VehicleTagParser {
 
         if (getConditionalTagInspector().isPermittedWayConditionallyRestricted(way))
             return WayAccess.CAN_SKIP;
-        else
+        else {
+            String oneway = way.getTag("oneway");
+            String maxWidthStr = way.getTag(MaxWidth.KEY);
+            double maxWidth = Double.parseDouble(maxWidthStr);
+            if ((oneway.equals("-1") || oneway.equals("yes")) && maxWidth < 3) {
+                return WayAccess.CAN_SKIP;
+            } else {
+                if (maxWidth < 5) {
+                    return WayAccess.CAN_SKIP;
+                }
+            }
             return WayAccess.WAY;
+        }
+
     }
 
     @Override

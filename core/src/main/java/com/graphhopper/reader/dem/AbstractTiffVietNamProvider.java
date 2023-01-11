@@ -91,7 +91,7 @@ public abstract class AbstractTiffVietNamProvider extends TileBasedElevationProv
             return memoEle;
         } catch (Exception e) {
             System.out.println(e);
-            return 0.0;
+            return memoEle;
         }
     }
 
