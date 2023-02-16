@@ -108,6 +108,8 @@ public class DefaultEncodedValueFactory implements EncodedValueFactory {
             enc = CDbName.create();
         } else if (name.equals(CStreetType.KEY)) {
             enc = CStreetType.create();
+        } else if (name.equals(CWayType.KEY)) {
+            enc = CWayType.create();
         } else {
             throw new IllegalArgumentException("DefaultEncodedValueFactory cannot find EncodedValue " + name);
         }

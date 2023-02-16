@@ -289,6 +289,9 @@ public class OSMPostgisReader extends PostgisReader {
         Object dbName = road.getAttribute(CDbName.KEY);
         way.setTag(CDbName.KEY, dbName.toString());
 
+        Object wayType = road.getAttribute(CWayType.KEY);
+        way.setTag(CWayType.KEY, wayType.toString());
+
         // Quan khu
         String dValue = "0";
         Object militaryId = road.getAttribute(CMilitary.KEY);
@@ -323,7 +326,7 @@ public class OSMPostgisReader extends PostgisReader {
         }
 
         Object maxWidthRaw = road.getAttribute(MaxWidth.KEY);
-        String maxWidth = "4.0";
+        String maxWidth = "3.0";
         if (maxWidthRaw != null) {
             maxWidth = maxWidthRaw.toString();
         }
@@ -426,11 +429,11 @@ public class OSMPostgisReader extends PostgisReader {
     }
 
     private Coordinate roundCoordinate(Coordinate c) {
-        c.x = Helper.round6(c.x);
-        c.y = Helper.round6(c.y);
+        c.x = Helper.round(c.x, 9);
+        c.y = Helper.round(c.y, 9);
 
         if (!Double.isNaN(c.z))
-            c.z = Helper.round6(c.z);
+            c.z = Helper.round(c.x, 9);
 
         return c;
     }

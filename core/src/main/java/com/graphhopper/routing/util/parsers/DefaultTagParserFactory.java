@@ -98,6 +98,8 @@ public class DefaultTagParserFactory implements TagParserFactory {
             return new CProvinceParser(lookup.getIntEncodedValue(CProvince.KEY));
         else if (name.equals(CStreetType.KEY))
             return new CStreetTypeParser(lookup.getIntEncodedValue(CStreetType.KEY));
+        else if (name.equals(CWayType.KEY))
+            return new CWayTypeParser(lookup.getIntEncodedValue(CWayType.KEY));
         return null;
     }
 }

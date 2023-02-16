@@ -210,14 +210,12 @@ public class CarTagParser extends VehicleTagParser {
             String oneway = way.getTag("oneway");
             String maxWidthStr = way.getTag(MaxWidth.KEY);
             double maxWidth = Double.parseDouble(maxWidthStr);
-            if ((oneway.equals("-1") || oneway.equals("yes")) && maxWidth < 3) {
-                return WayAccess.CAN_SKIP;
-            } else {
-                if (maxWidth < 5) {
-                    return WayAccess.CAN_SKIP;
-                }
+            String wayTypeStr = way.getTag(CWayType.KEY);
+            int wayType = Integer.parseInt(wayTypeStr);
+            if (maxWidth >= 4 || wayType == 2) {
+                return WayAccess.WAY;
             }
-            return WayAccess.WAY;
+            return WayAccess.CAN_SKIP;
         }
 
     }
