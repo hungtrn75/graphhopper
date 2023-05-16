@@ -41,6 +41,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
+import static com.graphhopper.search.EdgeKVStorage.KeyValue.STREET_NAME;
 import static com.graphhopper.util.DistanceCalcEarth.DIST_EARTH;
 import static com.graphhopper.util.Helper.nf;
 import static com.graphhopper.util.Helper.toLowerCase;
@@ -70,7 +71,7 @@ public class OSMPostgisReader extends PostgisReader {
     private final IntsRef tempRelFlags;
 
     public OSMPostgisReader(BaseGraph baseGraph, EncodingManager encodingManager, OSMParsers osmParsers, StorableProperties storableProperties, Map<String, String> postgisParams) {
-        super(baseGraph,encodingManager, osmParsers,storableProperties, postgisParams);
+        super(baseGraph, encodingManager, osmParsers, storableProperties, postgisParams);
         String tmpTagsToCopy = postgisParams.get("tags_to_copy");
         this.roadsFile = new File(postgisParams.get("datareader.file"));
         if (tmpTagsToCopy == null || tmpTagsToCopy.isEmpty()) {
@@ -279,7 +280,6 @@ public class OSMPostgisReader extends PostgisReader {
         long id = getOSMId(road);
 
         ReaderWay way = new ReaderWay(id);
-
         way.setTag("estimated_distance", distance);
         way.setTag("estimated_center", estmCentre);
 
@@ -290,7 +290,12 @@ public class OSMPostgisReader extends PostgisReader {
         way.setTag(CDbName.KEY, dbName.toString());
 
         Object wayType = road.getAttribute(CWayType.KEY);
-        way.setTag(CWayType.KEY, wayType.toString());
+        if (wayType != null) {
+            way.setTag(CWayType.KEY, wayType.toString());
+        } else {
+            way.setTag(CWayType.KEY, "1");
+        }
+
 
         // Quan khu
         String dValue = "0";
@@ -331,6 +336,14 @@ public class OSMPostgisReader extends PostgisReader {
             maxWidth = maxWidthRaw.toString();
         }
         way.setTag(MaxWidth.KEY, maxWidth);
+
+
+        Object streetNameObj = road.getAttribute("name");
+        String streetName = "Không tên";
+        if (streetNameObj != null) {
+            streetName = streetNameObj.toString();
+        }
+        way.setTag("street_name", streetName);
         // Loại đường bộ
         Object highwayType = road.getAttribute("highway");
         String highway = "primary";
@@ -349,7 +362,7 @@ public class OSMPostgisReader extends PostgisReader {
                 streetType = "3";
                 break;
             case "GK04":
-                highway = "motorroad";
+                highway = "motorway";
                 streetType = "4";
                 break;
             case "GK05":
@@ -377,7 +390,7 @@ public class OSMPostgisReader extends PostgisReader {
             if (val != null) {
                 way.setTag(tag, val);
             } else {
-                way.setTag(tag, "không tên");
+                way.setTag(tag, "Không tên");
             }
         }
 
@@ -408,9 +421,10 @@ public class OSMPostgisReader extends PostgisReader {
 
         IntsRef edgeFlags = encodingManager.createEdgeFlags();
         edgeFlags = super.osmParsers.handleWayTags(edgeFlags, way, tempRelFlags);
-        List<EdgeKVStorage.KeyValue> list = way.getTag("key_values", Collections.emptyList());
-        if (!list.isEmpty())
-            edge.setKeyValues(list);
+        List<EdgeKVStorage.KeyValue> list = new ArrayList<>();
+        list.add(new EdgeKVStorage.KeyValue(STREET_NAME, streetName));
+        edge.setKeyValues(list);
+
         if (edgeFlags.isEmpty())
             return;
 

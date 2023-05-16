@@ -50,7 +50,7 @@ public class GraphHopperPostgis extends GraphHopper {
         super.setOSMFile(ghConfig.getString("datareader.file", ""));
         postgisParams.put("dbtype", "postgis");
         postgisParams.put("host", ghConfig.getString("db.host", ""));
-        postgisParams.put("port", ghConfig.getString("db.port", "5432"));
+        postgisParams.put("port", String.valueOf(ghConfig.getInt("db.port", 5432)));
         postgisParams.put("schema", ghConfig.getString("db.schema", ""));
         postgisParams.put("database", ghConfig.getString("db.database", ""));
         postgisParams.put("user", ghConfig.getString("db.user", ""));

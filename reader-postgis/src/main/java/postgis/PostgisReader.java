@@ -39,6 +39,7 @@ import org.opengis.filter.Filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -76,10 +77,11 @@ public abstract class PostgisReader extends OSMReader {
     }
 
     @Override
-    public void readGraph() {
+    public void readGraph() throws IOException {
         graph.getDirectory().create();
         graph.create(100);
         properties.create(100);
+
         processJunctions();
         processRoads();
         finishReading();
