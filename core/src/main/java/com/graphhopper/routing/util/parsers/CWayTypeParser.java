@@ -20,25 +20,25 @@ package com.graphhopper.routing.util.parsers;
 import com.graphhopper.reader.ReaderWay;
 import com.graphhopper.routing.ev.CDbName;
 import com.graphhopper.routing.ev.CWayType;
+import com.graphhopper.routing.ev.EdgeIntAccess;
 import com.graphhopper.routing.ev.IntEncodedValue;
 import com.graphhopper.storage.IntsRef;
 
 public class CWayTypeParser implements TagParser {
 
-  private final IntEncodedValue dbNameEnc;
+    private final IntEncodedValue dbNameEnc;
 
-  public CWayTypeParser(IntEncodedValue dbNameEnc) {
-    this.dbNameEnc = dbNameEnc;
-  }
-
-  @Override
-  public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay readerWay, IntsRef relationFlags) {
-    int osmId = 1;
-    if (readerWay.hasTag(CWayType.KEY)) {
-      String value = readerWay.getTag(CWayType.KEY);
-      osmId = Integer.parseInt(value);
+    public CWayTypeParser(IntEncodedValue dbNameEnc) {
+        this.dbNameEnc = dbNameEnc;
     }
-    dbNameEnc.setInt(false, edgeFlags, osmId);
-    return edgeFlags;
-  }
+
+    @Override
+    public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay readerWay, IntsRef relationFlags) {
+        int osmId = 1;
+        if (readerWay.hasTag(CWayType.KEY)) {
+            String value = readerWay.getTag(CWayType.KEY);
+            osmId = Integer.parseInt(value);
+        }
+        dbNameEnc.setInt(false, edgeId, edgeIntAccess, osmId);
+    }
 }

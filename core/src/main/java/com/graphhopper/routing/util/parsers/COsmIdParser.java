@@ -19,10 +19,7 @@
 package com.graphhopper.routing.util.parsers;
 
 import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.ev.COsmId;
-import com.graphhopper.routing.ev.EncodedValue;
-import com.graphhopper.routing.ev.EncodedValueLookup;
-import com.graphhopper.routing.ev.IntEncodedValue;
+import com.graphhopper.routing.ev.*;
 import com.graphhopper.storage.IntsRef;
 
 import java.util.List;
@@ -35,13 +32,12 @@ public class COsmIdParser implements TagParser {
     }
 
     @Override
-    public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay way, IntsRef relationFlags) {
+    public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way, IntsRef relationFlags) {
         int osmId = 0;
         if (way.hasTag("osm_id")) {
             String value = way.getTag("osm_id");
             osmId = Integer.parseInt(value);
         }
-        osmIdEnc.setInt(false, edgeFlags, osmId);
-        return edgeFlags;
+        osmIdEnc.setInt(false, edgeId, edgeIntAccess, osmId);
     }
 }

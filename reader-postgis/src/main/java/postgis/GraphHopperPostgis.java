@@ -68,10 +68,11 @@ public class GraphHopperPostgis extends GraphHopper {
 
         logger.info("start creating graph from " + super.getOSMFile());
 
-        OSMReader reader = new OSMPostgisReader(baseGraph, super.getEncodingManager(), super.getOSMParsers(),super.getProperties(), postgisParams)
-                .setFile(_getOSMFile()).
-                setElevationProvider(super.getElevationProvider())
+        OSMReader reader = new OSMPostgisReader(baseGraph, super.getEncodingManager(), super.getOSMParsers(), super.getProperties(), postgisParams)
+                .setFile(_getOSMFile())
+                .setElevationProvider(super.getElevationProvider())
                 .setCountryRuleFactory(super.getCountryRuleFactory());
+        super.writeEncodingManagerToProperties();
         logger.info("using " + baseGraph.toString() + ", memory:" + getMemInfo());
         try {
             reader.readGraph();

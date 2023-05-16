@@ -19,10 +19,7 @@
 package com.graphhopper.routing.util.parsers;
 
 import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.ev.CCommune;
-import com.graphhopper.routing.ev.EncodedValue;
-import com.graphhopper.routing.ev.EncodedValueLookup;
-import com.graphhopper.routing.ev.IntEncodedValue;
+import com.graphhopper.routing.ev.*;
 import com.graphhopper.storage.IntsRef;
 
 import java.util.List;
@@ -38,13 +35,12 @@ public class CCommuneParser implements TagParser {
     }
 
     @Override
-    public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay way, IntsRef relationFlags) {
+    public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way, IntsRef relationFlags) {
         int communeId = 0;
         if (way.hasTag("commune_id")) {
             String value = way.getTag("commune_id");
             communeId = Integer.parseInt(value);
         }
-        communeEnc.setInt(false, edgeFlags, communeId);
-        return edgeFlags;
+        communeEnc.setInt(false, edgeId, edgeIntAccess, communeId);
     }
 }

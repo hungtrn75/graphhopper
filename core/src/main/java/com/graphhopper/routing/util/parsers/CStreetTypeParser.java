@@ -18,10 +18,7 @@
 package com.graphhopper.routing.util.parsers;
 
 import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.ev.CStreetType;
-import com.graphhopper.routing.ev.EncodedValue;
-import com.graphhopper.routing.ev.EncodedValueLookup;
-import com.graphhopper.routing.ev.IntEncodedValue;
+import com.graphhopper.routing.ev.*;
 import com.graphhopper.storage.IntsRef;
 
 import java.util.List;
@@ -35,13 +32,12 @@ public class CStreetTypeParser implements TagParser {
     }
 
     @Override
-    public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay readerWay, IntsRef relationFlags) {
+    public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay readerWay, IntsRef relationFlags) {
         int type = 0;
         if (readerWay.hasTag(CStreetType.KEY)) {
             String value = readerWay.getTag(CStreetType.KEY);
             type = Integer.parseInt(value);
         }
-        streetTypeEnc.setInt(false, edgeFlags, type);
-        return edgeFlags;
+        streetTypeEnc.setInt(false, edgeId, edgeIntAccess, type);
     }
 }

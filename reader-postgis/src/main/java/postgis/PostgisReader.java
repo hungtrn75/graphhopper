@@ -67,7 +67,7 @@ public abstract class PostgisReader extends OSMReader {
     public PostgisReader(BaseGraph baseGraph, EncodingManager encodingManager, OSMParsers osmParsers, StorableProperties storableProperties,
                          Map<String, String> postgisParams) {
 
-        super(baseGraph, encodingManager, osmParsers, new OSMReaderConfig());
+        super(baseGraph, osmParsers, new OSMReaderConfig());
         this.graph = baseGraph;
         this.nodeAccess = graph.getNodeAccess();
         this.encodingManager = encodingManager;

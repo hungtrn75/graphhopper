@@ -12,6 +12,7 @@ Here is an overview:
  * b3nn0, Android improvements
  * baumboi, path detail and landmark improvements
  * boldtrn, one of the core developers with motorcycle knowledge :)
+ * bt90, fixes like #2786
  * cgarreau, increase of routing success rate via subnetwork cleanup
  * chollemans, fixes like #1482
  * ChristianSeitzer, motorcycle improvements
@@ -61,6 +62,7 @@ Here is an overview:
  * NopMap, massive improvements regarding OSM, parsing and encoding, route relations
  * ocampana, initial implementation for instructions
  * oflebbe, work on iOS port and issues like #2060
+ * OlafFlebbeBosch, improvements like #2730
  * oschlueter, fixes like #1185
  * otbutz, added multiple EncodedValues
  * PGWelch, shapefile reader #874

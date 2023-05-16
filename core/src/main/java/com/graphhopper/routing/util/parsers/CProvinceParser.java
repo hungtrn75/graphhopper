@@ -19,10 +19,7 @@
 package com.graphhopper.routing.util.parsers;
 
 import com.graphhopper.reader.ReaderWay;
-import com.graphhopper.routing.ev.CProvince;
-import com.graphhopper.routing.ev.EncodedValue;
-import com.graphhopper.routing.ev.EncodedValueLookup;
-import com.graphhopper.routing.ev.IntEncodedValue;
+import com.graphhopper.routing.ev.*;
 import com.graphhopper.storage.IntsRef;
 
 import java.util.List;
@@ -38,14 +35,13 @@ public class CProvinceParser implements TagParser {
     }
 
     @Override
-    public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay way, IntsRef relationFlags) {
+    public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way, IntsRef relationFlags) {
         int provinceId = 0;
         if (way.hasTag("province_id")) {
             String value = way.getTag("province_id");
             provinceId = Integer.parseInt(value);
 
         }
-        provinceEnc.setInt(false, edgeFlags, provinceId);
-        return edgeFlags;
+        provinceEnc.setInt(false, edgeId, edgeIntAccess, provinceId);
     }
 }

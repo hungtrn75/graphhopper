@@ -22,7 +22,7 @@ import com.graphhopper.reader.ReaderWay;
 import com.graphhopper.routing.ev.*;
 import com.graphhopper.routing.util.EncodingManager;
 import com.graphhopper.routing.util.OSMParsers;
-import com.graphhopper.search.EdgeKVStorage;
+import com.graphhopper.search.KVStorage;
 import com.graphhopper.storage.BaseGraph;
 import com.graphhopper.storage.IntsRef;
 import com.graphhopper.storage.StorableProperties;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.util.*;
 
-import static com.graphhopper.search.EdgeKVStorage.KeyValue.STREET_NAME;
+import static com.graphhopper.search.KVStorage.KeyValue.STREET_NAME;
 import static com.graphhopper.util.DistanceCalcEarth.DIST_EARTH;
 import static com.graphhopper.util.Helper.nf;
 import static com.graphhopper.util.Helper.toLowerCase;
@@ -420,16 +420,14 @@ public class OSMPostgisReader extends PostgisReader {
         }
 
         IntsRef edgeFlags = encodingManager.createEdgeFlags();
-        edgeFlags = super.osmParsers.handleWayTags(edgeFlags, way, tempRelFlags);
-        List<EdgeKVStorage.KeyValue> list = new ArrayList<>();
-        list.add(new EdgeKVStorage.KeyValue(STREET_NAME, streetName));
+        List<KVStorage.KeyValue> list = new ArrayList<>();
+        list.add(new KVStorage.KeyValue(STREET_NAME, streetName));
         edge.setKeyValues(list);
 
         if (edgeFlags.isEmpty())
             return;
 
         edge.setDistance(distance);
-        edge.setFlags(edgeFlags);
         edge.setWayGeometry(pillarNodes);
     }
 

@@ -19,6 +19,7 @@
 package com.graphhopper.routing.util.parsers;
 
 import com.graphhopper.reader.ReaderWay;
+import com.graphhopper.routing.ev.EdgeIntAccess;
 import com.graphhopper.routing.ev.IntEncodedValue;
 import com.graphhopper.storage.IntsRef;
 
@@ -33,14 +34,13 @@ public class CMilitaryParser implements TagParser {
     }
 
     @Override
-    public IntsRef handleWayTags(IntsRef edgeFlags, ReaderWay way, IntsRef relationFlags) {
+    public void handleWayTags(int edgeId, EdgeIntAccess edgeIntAccess, ReaderWay way, IntsRef relationFlags) {
         int militaryId = 0;
         if (way.hasTag("military_id")) {
             String value = way.getTag("military_id");
             militaryId = Integer.parseInt(value);
 
         }
-        militaryEnc.setInt(false, edgeFlags, militaryId);
-        return edgeFlags;
+        militaryEnc.setInt(false, edgeId, edgeIntAccess, militaryId);
     }
 }
